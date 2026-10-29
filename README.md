@@ -11,6 +11,7 @@ This repository supports the Data Availability Statement of the manuscript. It c
 | `code/GeoSalud_Table1_Verification.ipynb` | Reproduces the annual respiratory discharges by canton (Table 1, ICD-10 J00–J99, by canton of residence) from the raw INEC microdata. |
 | `code/GeoSalud_supplementary_tables_colab.py` | Builds Supplementary Tables S2–S7 (leave-one-out, residual autocorrelation, MAD cleaning counts, cleaned-series sensitivity, wind check, quasi-Poisson models adjusted for epidemiological week and its square) from `data/weekly_panel.csv`. |
 | `data/weekly_panel.csv` | Weekly panel: canton, year, ISO week, mean TROPOMI/Sentinel-5P SO₂ column density (mol/m², raw, missing weeks left empty), and respiratory discharges (by discharge date). |
+| `data/population_INEC_rev2024_cotopaxi.csv` | Population by canton, age group (0–5, 6–17, 18–59, ≥60, and total) for 2022 and 2024, summed from the INEC *Estimaciones y Proyecciones de Población, revisión 2024* (cantonal tables by single year of age, Table 3.1). Denominators of the hospitalization rates. |
 | `data/ERA5_wind_highSO2_weeks.csv` | ERA5-Land 10 m wind at the crater for the five highest-SO₂ weeks of each year (post hoc wind check, Supplementary Table S6). |
 | `results/` | Output tables used in the manuscript: Table 2 (raw series), Table 3 and Table 4 (diagnostic and age groups, four core cantons), and the canton-mean SO₂ values of Figure 2. |
 
