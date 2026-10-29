@@ -9,11 +9,13 @@ This repository supports the Data Availability Statement of the manuscript. It c
 | Path | What it is |
 |---|---|
 | `code/GeoSalud_Table1_Verification.ipynb` | Reproduces the annual respiratory discharges by canton (Table 1, ICD-10 J00–J99, by canton of residence) from the raw INEC microdata. |
+| `code/GeoSalud_Table2_and_window_colab.py` | Reproduces Table 2 (raw series: Pearson and Spearman correlations, Benjamini-Hochberg FDR, Fisher r-to-z test) and the exploratory weeks 40–52 analysis from `data/weekly_panel.csv`. |
 | `code/GeoSalud_supplementary_tables_colab.py` | Builds Supplementary Tables S2–S7 (leave-one-out, residual autocorrelation, MAD cleaning counts, cleaned-series sensitivity, wind check, quasi-Poisson models adjusted for epidemiological week and its square) from `data/weekly_panel.csv`. |
+| `code/GeoSalud_HAC_autocorrelacion_colab.py` | Builds Supplementary Table S8: the quasi-Poisson models re-estimated with Newey–West (HAC) standard errors and with the previous week's discharges as a covariate. |
 | `data/weekly_panel.csv` | Weekly panel: canton, year, ISO week, mean TROPOMI/Sentinel-5P SO₂ column density (mol/m², raw, missing weeks left empty), and respiratory discharges (by discharge date). |
 | `data/population_INEC_rev2024_cotopaxi.csv` | Population by canton, age group (0–5, 6–17, 18–59, ≥60, and total) for 2022 and 2024, summed from the INEC *Estimaciones y Proyecciones de Población, revisión 2024* (cantonal tables by single year of age, Table 3.1). Denominators of the hospitalization rates. |
 | `data/ERA5_wind_highSO2_weeks.csv` | ERA5-Land 10 m wind at the crater for the five highest-SO₂ weeks of each year (post hoc wind check, Supplementary Table S6). |
-| `results/` | Output tables used in the manuscript: Table 2 (raw series), Table 3 and Table 4 (diagnostic and age groups, four core cantons), and the canton-mean SO₂ values of Figure 2. |
+| `results/` | Output tables used in the manuscript: Table 2 (raw series), Table 3 and Table 4 (diagnostic and age groups, four core cantons), the canton-mean SO₂ values of Figure 2, and `Table_S8_HAC.csv` (Supplementary Table S8). The weekly series by diagnostic group and age group behind Tables 3 and 4 are not included. |
 
 ## Data sources
 
@@ -25,12 +27,15 @@ This repository supports the Data Availability Statement of the manuscript. It c
 
 1. Download the INEC discharge files for 2022 (`.sav`) and 2024 (`.csv`) and run `code/GeoSalud_Table1_Verification.ipynb` to obtain the annual totals of Table 1.
 2. Put `data/weekly_panel.csv` in the working folder and run `code/GeoSalud_supplementary_tables_colab.py` (Python 3, `pandas`, `numpy`, `scipy`, `statsmodels`, `python-docx`). It writes `Table_S2.csv` … `Table_S7.csv` and `Supplementary_Material.docx`.
+3. With the same file, run `code/GeoSalud_Table2_and_window_colab.py` (Table 2 and weeks 40–52) and `code/GeoSalud_HAC_autocorrelacion_colab.py` (`Table_S8_HAC.csv`).
 
 ## Notes
 
 * The primary analysis uses the raw (unreplaced) SO₂ series; the MAD-cleaned series (median + 2.5 × MAD, 0.0002 mol/m², weeks 40–52 of 2022 exempt) is a secondary sensitivity analysis.
 * Excess-risk estimates are from quasi-Poisson models (Poisson standard errors multiplied by the square root of the dispersion ratio), per interquartile-range increase of SO₂.
 * Week assignment follows ISO 8601 using the hospital discharge date.
+* Population denominators come from the INEC *Estimaciones y Proyecciones de Población, revisión 2024* (cantonal tables by single year of age). Age-group correlations use discharges per 10,000 inhabitants of each age group; because the denominator is constant within a canton, year and age group, the coefficients equal those obtained with weekly counts.
+* Excess-risk estimates are reported as significant only if p < 0.05 with both quasi-Poisson and HAC standard errors (Supplementary Table S8).
 
 ## License
 
